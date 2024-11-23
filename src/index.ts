@@ -8,7 +8,7 @@ import { z } from 'zod'
 
 import { reactNativePrompt } from './prompt'
 import { androidTools } from './tools/android'
-import { iosTools } from './tools/ios'
+import { iosTools } from './tools/apple'
 import { reactNativeTools } from './tools/react-native'
 
 const MessageSchema = z.union([

@@ -9,6 +9,7 @@
     "@clack/prompts": "^0.8.1",
     "@react-native-community/cli-config": "^15.1.2",
     "@react-native-community/cli-platform-android": "^15.1.2",
+    "@react-native-community/cli-platform-apple": "^15.1.2",
     "@react-native-community/cli-platform-ios": "^15.1.2",
     "ai": "^4.0.3",
     "chalk": "^5.3.0",
