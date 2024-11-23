@@ -28,6 +28,17 @@ export const iosTools = {
     },
   }),
 
+  installRubyGems: tool({
+    description: 'Install Ruby gems, including CocoaPods',
+    parameters: z.object({}),
+    execute: async () => {
+      execSync('bundle install --path vendor/bundle', { stdio: 'inherit' })
+      return {
+        success: true,
+      }
+    },
+  }),
+
   bootAppleSimulator: tool({
     description:
       'Boot iOS simulator. Returns true if the simulator was booted successfully. False otherwise.',
