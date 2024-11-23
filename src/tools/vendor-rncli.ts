@@ -28,3 +28,6 @@ export function getPhoneName(adbPath: string, deviceId: string) {
     .replace(/\[ro\.product\.model\]:\s*\[(.*)\]/, '$1')
     .trim()
 }
+
+export { build } from '@react-native-community/cli-platform-android/build/commands/buildAndroid'
+export { getTaskNames } from '@react-native-community/cli-platform-android/build/commands/runAndroid/getTaskNames'

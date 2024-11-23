@@ -7,6 +7,7 @@
   "dependencies": {
     "@ai-sdk/openai": "^1.0.2",
     "@clack/prompts": "^0.8.1",
+    "@react-native-community/cli-config": "^15.1.2",
     "@react-native-community/cli-platform-android": "^15.1.2",
     "@react-native-community/cli-platform-ios": "^15.1.2",
     "chalk": "^5.3.0",
