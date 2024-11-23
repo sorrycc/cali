@@ -29,5 +29,29 @@ export function getPhoneName(adbPath: string, deviceId: string) {
     .trim()
 }
 
+export async function loadReactNativeConfig() {
+  try {
+    const output = execSync('npx react-native config', {
+      env: {
+        ...process.env,
+        NODE_NO_WARNINGS: '1',
+      },
+      stdio: ['pipe', 'pipe', 'ignore'],
+      encoding: 'utf8',
+    }).toString()
+    return JSON.parse(output)
+  } catch (error) {
+    return {
+      error: `There was an error loading project configuration: ${JSON.stringify(error)}`,
+    }
+  }
+}
+
 export { build } from '@react-native-community/cli-platform-android/build/commands/buildAndroid'
 export { getTaskNames } from '@react-native-community/cli-platform-android/build/commands/runAndroid/getTaskNames'
+export { default as createAppleBuild } from '@react-native-community/cli-platform-apple/build/commands/buildCommand/createBuild'
+export { default as createLogCommand } from '@react-native-community/cli-platform-apple/build/commands/logCommand/createLog'
+export { default as createAppleRun } from '@react-native-community/cli-platform-apple/build/commands/runCommand/createRun'
+export { getPlatformInfo } from '@react-native-community/cli-platform-apple/build/commands/runCommand/getPlatformInfo'
+export { default as listAppleDevices } from '@react-native-community/cli-platform-apple/build/tools/listDevices'
+export type { ApplePlatform } from '@react-native-community/cli-platform-apple/build/types'
