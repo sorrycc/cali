@@ -117,18 +117,34 @@ export const iosTools = {
   installPods: tool({
     description: 'Install CocoaPods dependencies',
     parameters: z.object({
+      platform: z.enum(platforms),
+      clean: z.boolean().optional().default(false),
       newArchitecture: z.boolean().optional(),
     }),
-    execute: async ({ newArchitecture }) => {
+    execute: async ({ newArchitecture, platform, clean }) => {
       try {
         const config = await loadReactNativeConfig()
-        const iosDirectory = config.project.ios?.sourceDir ?? 'ios'
+        const directory = config.project?.[platform]?.sourceDir ?? 'ios'
+
+        if (!directory) {
+          return {
+            success: false,
+            error: 'Project directory not found',
+          }
+        }
+
+        if (clean) {
+          execSync('rm -rf Pods Podfile.lock build', {
+            cwd: directory,
+            stdio: 'inherit',
+          })
+        }
 
         const commands = ['bundle exec pod install']
 
         for (const command of commands) {
           execSync(command, {
-            cwd: iosDirectory,
+            cwd: directory,
             stdio: 'inherit',
             env: {
               ...process.env,
