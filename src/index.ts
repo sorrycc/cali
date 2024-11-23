@@ -4,7 +4,8 @@ import { CoreMessage, generateText } from 'ai'
 import chalk from 'chalk'
 import { z } from 'zod'
 
-import { cliTools } from './tools/react-native-cli'
+import { cliTools } from './tools/cli'
+import { retro } from 'gradient-string'
 
 const MessageSchema = z.union([
   z.object({ type: z.literal('select'), content: z.string(), options: z.array(z.string()) }),
@@ -13,16 +14,18 @@ const MessageSchema = z.union([
   z.object({ type: z.literal('end'), content: z.string() }),
 ])
 
-intro(`
+console.clear()
+
+intro(`${retro(`
 ██████╗ ██╗      █████╗ ██╗
 ██╔══██╗██║     ██╔══██╗██║
 ██║  ╚═╝██║     ███████║██║
 ██║  ██╗██║     ██╔══██║██║
 ██████╔╝███████╗██║  ██║██║
 ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝
+`)}
 
-${chalk.gray('AI agent for building React Native apps')}
-`)
+${chalk.gray(`AI agent for building React Native apps.\nPowered by: ${chalk.bold('Vercel AI SDK')} & ${chalk.bold('React Native CLI')}`)}`)
 
 const question = (await text({
   message: 'What do you want to do today?',
