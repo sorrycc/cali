@@ -1,14 +1,16 @@
 {
-  "name": "clai",
+  "name": "cali",
   "version": "0.0.1",
-  "type": "module",
   "author": "Mike Grabowski <mike@callstack.com>",
   "license": "MIT",
   "description": "AI agent that runs React Native apps",
   "dependencies": {
     "@ai-sdk/openai": "^1.0.2",
     "@clack/prompts": "^0.8.1",
+    "@react-native-community/cli-platform-android": "^15.1.2",
+    "@react-native-community/cli-platform-ios": "^15.1.2",
     "chalk": "^5.3.0",
+    "dedent": "^1.5.3",
     "gradient-string": "^3.0.0",
     "zod": "^3.23.8"
   },

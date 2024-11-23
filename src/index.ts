@@ -1,11 +1,15 @@
 import { openai } from '@ai-sdk/openai'
-import { confirm, intro, log, select, spinner, text } from '@clack/prompts'
+import { confirm, log, select, spinner, text } from '@clack/prompts'
 import { CoreMessage, generateText } from 'ai'
 import chalk from 'chalk'
+import dedent from 'dedent'
+import { retro } from 'gradient-string'
 import { z } from 'zod'
 
-import { cliTools } from './tools/cli'
-import { retro } from 'gradient-string'
+import { reactNativePrompt } from './prompt'
+import { androidTools } from './tools/android'
+import { iosTools } from './tools/ios'
+import { reactNativeTools } from './tools/react-native'
 
 const MessageSchema = z.union([
   z.object({ type: z.literal('select'), content: z.string(), options: z.array(z.string()) }),
@@ -16,16 +20,26 @@ const MessageSchema = z.union([
 
 console.clear()
 
-intro(`${retro(`
-██████╗ ██╗      █████╗ ██╗
-██╔══██╗██║     ██╔══██╗██║
-██║  ╚═╝██║     ███████║██║
-██║  ██╗██║     ██╔══██║██║
-██████╔╝███████╗██║  ██║██║
-╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝
-`)}
+console.log(
+  retro(`
+  ██████╗ █████╗ ██╗     ██╗
+ ██╔════╝██╔══██╗██║     ██║
+ ██║     ███████║██║     ██║
+ ██║     ██╔══██║██║     ██║
+ ╚██████╗██║  ██║███████╗██║
+  ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝
+`)
+)
 
-${chalk.gray(`AI agent for building React Native apps.\nPowered by: ${chalk.bold('Vercel AI SDK')} & ${chalk.bold('React Native CLI')}`)}`)
+console.log(
+  chalk.gray(dedent`
+    AI agent for building React Native apps.
+    
+    Powered by: ${chalk.bold('Vercel AI SDK')} & ${chalk.bold('React Native CLI')}
+  `)
+)
+
+console.log()
 
 const question = (await text({
   message: 'What do you want to do today?',
@@ -50,83 +64,12 @@ while (true) {
 
   const response = await generateText({
     model: openai('gpt-4o'),
-    // tbd: change prompt based on project
-    system: `
-      ROLE:
-        You are a React Native developer tasked with building and shipping a React Native app.
-        Use tools to gather information about the project.
-       
-      TOOL PARAMETERS:
-        - If tools require parameters, ask the user to provide them explicitly.
-        - If you can get required parameters by running other tools, you must do so.
-
-      TOOL RETURN VALUES:
-        - If tool returns an array, always ask user to select one of the options.
-        - Never decide for the user.
-
-      WORKFLOW RULES:
-        You do not know what platforms are available. You must run a tool to list available platforms.
-
-        Ask one clear and concise question at a time.
-        If you need more information, ask a follow-up question.
-
-        Never build or run for multiple platforms simultaneously.
-        If user selects "Debug" mode, always start Metro bundler using "startMetro" tool.
-
-      ERROR HANDLING:
-        - If a tool call returns an error, you must explain the error to the user and ask user if they want to try again:
-          {
-            "type": "confirmation",
-            "content": "<error explanation and retry question>"
-          }
-        - If you have tools to fix the error, ask user to select one of them:
-          {
-            "type": "select",
-            "content": "<error explanation and tool selection question>",
-            "options": ["<option1>", "<option2>", "<option3>"]
-          }
-        
-        MANUAL RESOLUTION:
-          - If you do not have tools to fix the error, you must ask a Yes/No question with manual steps as content:
-            {
-              "type": "confirmation",
-              "content": "<error explanation and manual steps>"
-            }
-
-          - If user confirms, you must re-run the same tool.
-          - Never ask user to perform the action manually. Instead, ask user to fix the error, so you can run the tool again.
-          - If single tool fails more than 3 times, proceed with NEXT TASK.
-
-      RESPONSE FORMAT:
-        - Your response must be a valid JSON object.
-        - Your response must not contain any other text.
-        - Your response must start with { and end with }.
-
-      RESPONSE TYPES:
-        - If the question is a question that involves choosing from a list of options, you must return:
-          {
-            "type": "select",
-            "content": "<question>",
-            "options": ["<option1>", "<option2>", "<option3>"]
-          }
-        - If the question is a Yes/No question, you must return:
-          {
-            "type": "confirmation",
-            "content": "<question>"
-          }
-        - When you finish processing user task, you must ask user a confirmation if they want to continue with another task:
-          {
-            "type": "confirmation",
-            "content": "<question>"
-          }
-        - If user does not want to continue, you must return "end" type.
-          {
-            "type": "end",
-            "content": "<result>"
-          } 
-    `,
-    // tbd: set tools based on project, platform, and question
-    tools: cliTools,
+    system: reactNativePrompt,
+    tools: {
+      ...reactNativeTools,
+      ...iosTools,
+      ...androidTools,
+    },
     maxSteps: 10,
     messages,
     onStepFinish(event) {
