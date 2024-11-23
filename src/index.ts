@@ -138,7 +138,7 @@ while (true) {
   )
 
   if (toolCalls.length > 0) {
-    s.stop(`Tools called: ${chalk.gray(toolCalls.join(', '))})`)
+    s.stop(`Tools called: ${chalk.gray(toolCalls.join(', '))}`)
   } else {
     s.stop(chalk.gray('Done.'))
   }
