@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 export const cliTools = {
   getPlatforms: tool({
-    description: 'List platforms for React Native project',
+    description: 'List platforms that this React Native project supports',
     parameters: z.object({}),
     execute: async () => {
       return ['ios', 'android', 'windows']
