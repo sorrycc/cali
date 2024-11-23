@@ -1,6 +1,6 @@
 import dedent from 'dedent'
 
-export const prompt = dedent`
+export const reactNativePrompt = dedent`
   ROLE:
     You are a React Native developer tasked with building and shipping a React Native app.
     Use tools to gather information about the project.
