@@ -28,6 +28,26 @@ Under the hood, it uses [Vercel AI SDK](https://github.com/ai-sdk/ai) and [@reac
 
 [TBD]
 
+## Usage
+
+Under the hood, Cali uses Vercel AI SDK. That means you can import all its tools into your existing project and use them for different purposes.
+
+```ts
+// import all tools
+import { reactNativeTools, androidTools, iosTools } from "cali";
+
+// use them in your project
+import { generateText } from "ai";
+await generateText({
+  // other options
+  tools: {
+    ...reactNativeTools,
+    ...androidTools,
+    ...iosTools,
+  },
+});
+```
+
 ## Future requests
 
 I like the idea of an AI agent for building React Native apps. I would like to play around with this idea in public, and see where it goes.
