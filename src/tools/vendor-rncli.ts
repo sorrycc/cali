@@ -49,6 +49,7 @@ export async function loadReactNativeConfig() {
 
 export { build } from '@react-native-community/cli-platform-android/build/commands/buildAndroid'
 export { getTaskNames } from '@react-native-community/cli-platform-android/build/commands/runAndroid/getTaskNames'
+export { default as tryLaunchAppOnDevice } from '@react-native-community/cli-platform-android/build/commands/runAndroid/tryLaunchAppOnDevice'
 export { default as createAppleBuild } from '@react-native-community/cli-platform-apple/build/commands/buildCommand/createBuild'
 export { default as createLogCommand } from '@react-native-community/cli-platform-apple/build/commands/logCommand/createLog'
 export { default as createAppleRun } from '@react-native-community/cli-platform-apple/build/commands/runCommand/createRun'

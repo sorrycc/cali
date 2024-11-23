@@ -1,7 +1,14 @@
 import { tool } from 'ai'
 import { z } from 'zod'
 
-import { build, getEmulators, getPhoneName, getTaskNames, tryLaunchEmulator } from './vendor-rncli'
+import {
+  build,
+  getEmulators,
+  getPhoneName,
+  getTaskNames,
+  tryLaunchAppOnDevice,
+  tryLaunchEmulator,
+} from './vendor-rncli'
 import { adb, getAdbPath, getEmulatorName } from './vendor-rncli'
 
 export const androidTools = {
@@ -85,32 +92,30 @@ export const androidTools = {
     },
   }),
 
-  // startAndroidApp: tool({
-  //   description: 'Start Android application on emulator or device',
-  //   parameters: z.object({
-  //     deviceId: z.string().optional(),
-  //     variant: z.enum(['debug', 'release']),
-  //     clearData: z.boolean().optional().default(false),
-  //     mainActivity: z.string().optional().default('.MainActivity'),
-  //   }),
-  //   execute: async ({ deviceId, variant, clearData, mainActivity }) => {
-  //     return {
-  //       success: true,
-  //       device: {
-  //         id: deviceId || 'emulator-5554',
-  //         name: 'Pixel_4_API_30',
-  //         type: 'emulator',
-  //         os: 'Android 11',
-  //       },
-  //       appState: 'running',
-  //       pid: 23456,
-  //       debugUrl: 'http://localhost:8081/debugger-ui',
-  //       launchTime: '3.1s',
-  //       logcat: {
-  //         pid: 23457,
-  //         command: 'adb logcat -v time',
-  //       },
-  //     }
-  //   },
-  // }),
+  launchAndroidAppOnDevice: tool({
+    description: 'Launch Android application on a given device',
+    parameters: z.object({
+      deviceId: z.string(),
+      adbPath: z.string(),
+      packageName: z.string(),
+      mainActivity: z.string(),
+      applicationId: z.string(),
+    }),
+    execute: async ({ deviceId, adbPath, packageName, mainActivity, applicationId }) => {
+      try {
+        // @ts-ignore
+        tryLaunchAppOnDevice(deviceId, { packageName, mainActivity, applicationId }, adbPath, {
+          appId: '',
+          appIdSuffix: '',
+        })
+        return {
+          success: true,
+        }
+      } catch (error) {
+        return {
+          error: error instanceof Error ? error.message : 'Failed to launch app',
+        }
+      }
+    },
+  }),
 }
