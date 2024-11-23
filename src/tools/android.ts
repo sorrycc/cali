@@ -54,7 +54,7 @@ export const androidTools = {
   }),
 
   buildAndroidApp: tool({
-    description: 'Builds Android application',
+    description: 'Builds Android application and install it on a given device',
     parameters: z.object({
       deviceId: z.string(),
       metroPort: z.number(),
@@ -65,13 +65,12 @@ export const androidTools = {
     execute: async ({ mode, appName, sourceDir, metroPort }) => {
       // tbd: taks selection
       // tbd: user selection
-
-      // tbd: build
+      // tbd: flavor selection
 
       const gradleArgs = getTaskNames(appName, mode, [], 'install')
       gradleArgs.push('-x', 'lint', `-PreactNativeDevServerPort=${metroPort}`)
 
-      // tbd: activeArchOnly
+      // tbd: additional CLI flags, such as activeArchOnly
 
       try {
         build(gradleArgs, sourceDir)
@@ -85,12 +84,6 @@ export const androidTools = {
       }
     },
   }),
-
-  // installAndroidApp: tool({
-  //   description: 'Installs Android application on device or emulator',
-  //   parameters: z.object({}),
-  //   execute: async () => {},
-  // }),
 
   // startAndroidApp: tool({
   //   description: 'Start Android application on emulator or device',
