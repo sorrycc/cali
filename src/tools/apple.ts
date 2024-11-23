@@ -15,6 +15,8 @@ import {
 const platforms = ['ios', 'tvos', 'visionos'] as const
 
 export const iosTools = {
+  // Explicit naming helps AI to understand the purpose of the tool
+
   listAppleSimulators: tool({
     description: 'List available simulators',
     parameters: z.object({
@@ -50,8 +52,8 @@ export const iosTools = {
     },
   }),
 
-  buildAppleApp: tool({
-    description: 'Build iOS application',
+  buildAppleAppWithoutStarting: tool({
+    description: 'Build application for Apple platforms without running it',
     parameters: z.object({
       platform: z.enum(platforms),
       configuration: z.enum(['Debug', 'Release']),
@@ -83,8 +85,8 @@ export const iosTools = {
     },
   }),
 
-  startAppleApp: tool({
-    description: 'Start Apple application on simulator or device',
+  buildStartAppleApp: tool({
+    description: 'Build and start Apple application on simulator or device',
     parameters: z.object({
       platform: z.enum(platforms),
       simulator: z.string().optional(),
