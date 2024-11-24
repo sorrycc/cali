@@ -15,8 +15,6 @@ import {
 const platforms = ['ios', 'tvos', 'visionos'] as const
 
 export const iosTools = {
-  // Explicit naming helps AI to understand the purpose of the tool
-
   listAppleSimulators: tool({
     description: 'List available simulators',
     parameters: z.object({

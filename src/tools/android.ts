@@ -1,4 +1,5 @@
 import { tool } from 'ai'
+import dedent from 'dedent'
 import { z } from 'zod'
 
 import {
@@ -13,15 +14,23 @@ import { adb, getAdbPath, getEmulatorName } from './vendor-rncli'
 
 export const androidTools = {
   getAdbPath: tool({
-    description: 'Get path to ADB executable',
+    description: 'Returns path to ADB executable',
     parameters: z.object({}),
     execute: async () => {
       return getAdbPath()
     },
   }),
 
-  listAndroidDevices: tool({
-    description: 'List available Android devices and emulators',
+  getAndroidDevices: tool({
+    description: dedent`
+      Gets available Android devices and emulators.
+
+      Returns an array of devices:
+        - "id" - device ID
+        - "name" - device name
+        - "type" - device type ("device" or "emulator")
+        - "booted" - whether the device is booted
+    `,
     parameters: z.object({
       adbPath: z.string(),
     }),
@@ -50,12 +59,12 @@ export const androidTools = {
   }),
 
   bootAndroidEmulator: tool({
-    description: 'Boot Android emulator',
+    description: 'Boots a given Android emulator',
     parameters: z.object({
       adbPath: z.string(),
-      emulatorName: z.string(),
+      androidDevice_name: z.string(),
     }),
-    execute: async ({ adbPath, emulatorName }) => {
+    execute: async ({ adbPath, androidDevice_name: emulatorName }) => {
       await tryLaunchEmulator(adbPath, emulatorName)
     },
   }),
@@ -63,13 +72,18 @@ export const androidTools = {
   buildAndroidApp: tool({
     description: 'Builds Android application and install it on a given device',
     parameters: z.object({
-      deviceId: z.string(),
+      androidDevice_id: z.string(),
       metroPort: z.number(),
-      sourceDir: z.string(),
-      appName: z.string(),
+      reactNativeConfig_android_sourceDir: z.string(),
+      reactNativeConfig_android_appName: z.string(),
       mode: z.enum(['debug', 'release']),
     }),
-    execute: async ({ mode, appName, sourceDir, metroPort }) => {
+    execute: async ({
+      mode,
+      reactNativeConfig_android_appName: appName,
+      reactNativeConfig_android_sourceDir: sourceDir,
+      metroPort,
+    }) => {
       // tbd: taks selection
       // tbd: user selection
       // tbd: flavor selection
@@ -93,15 +107,21 @@ export const androidTools = {
   }),
 
   launchAndroidAppOnDevice: tool({
-    description: 'Launch Android application on a given device',
+    description: 'Launches a given Android application on a specified device',
     parameters: z.object({
-      deviceId: z.string(),
+      androidDevice_id: z.string(),
       adbPath: z.string(),
-      packageName: z.string(),
-      mainActivity: z.string(),
-      applicationId: z.string(),
+      reactNativeConfig_android_packageName: z.string(),
+      reactNativeConfig_android_mainActivity: z.string(),
+      reactNativeConfig_android_applicationId: z.string(),
     }),
-    execute: async ({ deviceId, adbPath, packageName, mainActivity, applicationId }) => {
+    execute: async ({
+      androidDevice_id: deviceId,
+      adbPath,
+      reactNativeConfig_android_packageName: packageName,
+      reactNativeConfig_android_mainActivity: mainActivity,
+      reactNativeConfig_android_applicationId: applicationId,
+    }) => {
       try {
         // @ts-ignore
         tryLaunchAppOnDevice(deviceId, { packageName, mainActivity, applicationId }, adbPath, {
