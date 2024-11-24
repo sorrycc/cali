@@ -51,7 +51,7 @@ We are actively working on expanding its capabilities. If you would like to requ
 
 #### Building an app step-by-step
 
-<video src="https://github.com/user-attachments/assets/1d9c3f5b-d5cd-4901-8cad-bd10f1a45b07" width="500" />
+<video src="https://github.com/user-attachments/assets/1d9c3f5b-d5cd-4901-8cad-bd10f1a45b07" width="500"></video>
 
 #### Building an app with a highly-specific task
 
