@@ -53,7 +53,6 @@ export const iosTools = {
         }
       } catch (error) {
         return {
-          success: false,
           error: error instanceof Error ? error.message : 'Failed to boot simulator',
           deviceId,
         }
@@ -110,6 +109,11 @@ export const iosTools = {
     }),
     execute: async ({ platform, ...params }) => {
       const config = await loadReactNativeConfig()
+      if (!config) {
+        return {
+          error: 'Project configuration not found',
+        }
+      }
       const run = createAppleRun({ platformName: platform })
 
       try {
@@ -135,11 +139,15 @@ export const iosTools = {
     execute: async ({ newArchitecture, platform, clean }) => {
       try {
         const config = await loadReactNativeConfig()
+        if (!config) {
+          return {
+            error: 'Project configuration not found',
+          }
+        }
         const directory = config.project?.[platform]?.sourceDir ?? 'ios'
 
         if (!directory) {
           return {
-            success: false,
             error: 'Project directory not found',
           }
         }
@@ -170,7 +178,6 @@ export const iosTools = {
         }
       } catch (error) {
         return {
-          success: false,
           error: error instanceof Error ? error.message : 'Failed to install pods',
         }
       }
@@ -186,6 +193,12 @@ export const iosTools = {
     execute: async ({ platform, ...params }) => {
       const config = await loadReactNativeConfig()
       const log = createLogCommand({ platformName: platform })
+
+      if (!config) {
+        return {
+          error: 'Project configuration not found',
+        }
+      }
       await log([], config, params)
       return {
         success: true,

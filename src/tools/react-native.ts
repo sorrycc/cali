@@ -69,13 +69,21 @@ export const reactNativeTools = {
     `,
     parameters: z.object({}),
     execute: async () => {
+      const config = await loadReactNativeConfig()
+      if (!config) {
+        return {
+          error: 'Project configuration not found',
+        }
+      }
+
       const {
         root,
         reactNativePath: path,
         reactNativeVersion: version,
         project,
         platforms,
-      } = await loadReactNativeConfig()
+      } = config
+
       return {
         root,
         path,
