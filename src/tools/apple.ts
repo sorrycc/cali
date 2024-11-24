@@ -21,7 +21,7 @@ export const listAppleSimulators = tool({
   }),
   execute: async ({ platform }) => {
     const sdkNames = getPlatformInfo(platform as ApplePlatform).sdkNames
-    return await listAppleDevices(sdkNames)
+    await listAppleDevices(sdkNames)
   },
 })
 
@@ -37,8 +37,7 @@ export const installRubyGems = tool({
 })
 
 export const bootAppleSimulator = tool({
-  description:
-    'Boot iOS simulator. Returns true if the simulator was booted successfully. False otherwise.',
+  description: 'Boots iOS simulator',
   parameters: z.object({
     deviceId: z.string(),
   }),
@@ -46,15 +45,12 @@ export const bootAppleSimulator = tool({
     try {
       execSync(`xcrun simctl boot ${deviceId}`, { stdio: 'inherit' })
       return {
-        success: true,
-        deviceId,
-        state: 'Booted',
+        success: `Device ${deviceId} booted successfully.`,
       }
     } catch (error) {
       return {
-        success: false,
-        error: error instanceof Error ? error.message : 'Failed to boot simulator',
-        deviceId,
+        error:
+          error instanceof Error ? error.message : `Failed to boot simulator with ID ${deviceId}`,
       }
     }
   },
@@ -138,7 +134,6 @@ export const installPods = tool({
 
       if (!directory) {
         return {
-          success: false,
           error: 'Project directory not found',
         }
       }
@@ -165,11 +160,9 @@ export const installPods = tool({
 
       return {
         success: true,
-        message: 'Pods installed successfully',
       }
     } catch (error) {
       return {
-        success: false,
         error: error instanceof Error ? error.message : 'Failed to install pods',
       }
     }

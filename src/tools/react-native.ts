@@ -28,8 +28,7 @@ export const startMetroDevServer = tool({
       const { port: newPort } = await findDevServerPort(port, root)
       startServerInNewWindow(newPort, root, reactNativePath, getDefaultUserTerminal())
       return {
-        success: true,
-        port: newPort,
+        success: `Metro server started on port ${newPort}.`,
       }
     } catch (error) {
       return {

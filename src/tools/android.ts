@@ -68,8 +68,8 @@ export const bootAndroidEmulator = tool({
     try {
       await tryLaunchEmulator(adbPath, emulatorName)
       return {
-        success: true,
-        action: `Device booted. Re-run "getAndroidDevices" to verify ${emulatorName} is in the list, with "booted" set to true.`,
+        success: 'Device booted successfully.',
+        action: `Re-run "getAndroidDevices" to verify ${emulatorName} is in the list, with "booted" set to true.`,
       }
     } catch (error) {
       return {
