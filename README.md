@@ -67,9 +67,10 @@ We are actively working on expanding its capabilities. If you would like to requ
 
 ## Prerequisites
 
-In order to use Cali, you need to have an OpenAI API key. You can get one [here](https://platform.openai.com/api-keys).
+In order to use Cali, you need to have an OpenAI API key. You can get one [here](https://platform.openai.com/api-keys). Once you have your key, you can set it as `OPENAI_API_KEY` env variable (either create a dotenv file or set it inline).
 
-Once you have your key, you can set it as `OPENAI_API_KEY` env variable (either create a dotenv file or set it inline).
+> [!NOTE]
+> In the future, you will be able to change the provider from OpenAI to other, including local and self-hosted models. If you are interested in this feature, please open an issue so we can prioritize it and make sure it brings the best DX.
 
 ## Usage
 
