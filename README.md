@@ -79,3 +79,7 @@ To run the project, run `bun ./src/cli.ts`.
 To run the project from global installation, run `bun --bun run cali`.
 
 Note `--bun` is required due to shebang line in the CLI pointing to Node.
+
+## Special thanks
+
+Special thanks to [@jedirandy](https://github.com/jedirandy) for donating the name `cali` on `npm`!
