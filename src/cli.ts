@@ -91,6 +91,12 @@ const messages: CoreMessage[] = [
   },
 ]
 
+const tools = {
+  ...reactNativeTools,
+  ...iosTools,
+  ...androidTools,
+}
+
 const s = spinner()
 
 // eslint-disable-next-line no-constant-condition
@@ -100,18 +106,26 @@ while (true) {
   const response = await generateText({
     model: openai(AI_MODEL),
     system: reactNativePrompt,
-    tools: {
-      ...reactNativeTools,
-      ...iosTools,
-      ...androidTools,
-    },
+    tools,
     maxSteps: 10,
     messages,
-    onStepFinish(event) {
-      if (event.toolCalls.length > 0) {
-        s.message(
-          `Executing: ${chalk.gray(event.toolCalls.map((toolCall) => toolCall.toolName).join(', '))}`
-        )
+    onStepStart(toolCalls) {
+      if (toolCalls.length > 0) {
+        const message = `Executing: ${chalk.gray(toolCalls.map((toolCall) => toolCall.toolName).join(', '))}`
+
+        let spinner = s.message
+        for (const toolCall of toolCalls) {
+          /**
+           * Certain tools call external helpers outside of our control that pipe output to our stdout.
+           * In such case, we stop the spinner to avoid glitches and display the output instead.
+           */
+          if (['buildAndroidApp', 'launchAndroidAppOnDevice'].includes(toolCall.toolName)) {
+            spinner = s.stop
+            break
+          }
+        }
+
+        spinner(message)
       }
     },
   })
