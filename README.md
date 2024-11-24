@@ -55,7 +55,7 @@ We are actively working on expanding its capabilities. If you would like to requ
 
 #### Building an app with a highly-specific task
 
-[TBD]
+<video src="https://github.com/user-attachments/assets/74638f88-3515-4531-831c-7a98c2d4acd2" width="500"></video>
 
 #### Searching and installing a new React Native library
 
