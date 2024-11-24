@@ -1,6 +1,6 @@
 import 'dotenv/config'
 
-import { createOpenAI, openai } from '@ai-sdk/openai'
+import { createOpenAI } from '@ai-sdk/openai'
 import { confirm, log, select, spinner, text } from '@clack/prompts'
 import { CoreMessage, generateText } from 'ai'
 import chalk from 'chalk'
@@ -9,9 +9,9 @@ import { retro } from 'gradient-string'
 import { z } from 'zod'
 
 import { reactNativePrompt } from './prompt'
-import { androidTools } from './tools/android'
-import { iosTools } from './tools/apple'
-import { reactNativeTools } from './tools/react-native'
+import * as androidTools from './tools/android'
+import * as iosTools from './tools/apple'
+import * as reactNativeTools from './tools/react-native'
 
 const MessageSchema = z.union([
   z.object({ type: z.literal('select'), content: z.string(), options: z.array(z.string()) }),
