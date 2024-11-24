@@ -114,6 +114,10 @@ while (true) {
 
         let spinner = s.message
         for (const toolCall of toolCalls) {
+          /**
+           * Certain tools call external helpers outside of our control that pipe output to our stdout.
+           * In such case, we stop the spinner to avoid glitches and display the output instead.
+           */
           if (['buildAndroidApp', 'launchAndroidAppOnDevice'].includes(toolCall.toolName)) {
             spinner = s.stop
             break
