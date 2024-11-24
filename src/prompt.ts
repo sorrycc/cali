@@ -57,6 +57,11 @@ export const reactNativePrompt = dedent`
         "content": "<question>",
         "options": ["<option1>", "<option2>", "<option3>"]
       }
+    - If the question is a free-form question, you must return:
+      {
+        "type": "question",
+        "content": "<question>"
+      }
     - If the question is a Yes/No or it is a confirmation question, you must return:
       {
         "type": "confirmation",
