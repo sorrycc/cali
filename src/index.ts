@@ -11,6 +11,7 @@ import { z } from 'zod'
 import { reactNativePrompt } from './prompt'
 import { androidTools } from './tools/android'
 import { iosTools } from './tools/apple'
+import { generalTools } from './tools/general'
 import { reactNativeTools } from './tools/react-native'
 
 const MessageSchema = z.union([
@@ -104,6 +105,7 @@ while (true) {
       ...reactNativeTools,
       ...iosTools,
       ...androidTools,
+      ...generalTools,
     },
     maxSteps: 10,
     messages,
