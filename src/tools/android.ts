@@ -1,3 +1,4 @@
+import { tryRunAdbReverse } from '@react-native-community/cli-platform-android'
 import { tool } from 'ai'
 import dedent from 'dedent'
 import { z } from 'zod'
@@ -116,6 +117,29 @@ export const androidTools = {
     },
   }),
 
+  runAdbReverse: tool({
+    description: 'Runs "adb reverse" to forward given port to a specified Android device',
+    parameters: z.object({
+      androidDevice_id: z.string(),
+      port: z.number(),
+    }),
+    execute: async ({ androidDevice_id: deviceId, port }) => {
+      try {
+        tryRunAdbReverse(port, deviceId)
+        return {
+          success: true,
+        }
+      } catch (error) {
+        return {
+          error:
+            error instanceof Error
+              ? error.message
+              : 'Failed to run "adb reverse". Port is not forwared.',
+        }
+      }
+    },
+  }),
+
   launchAndroidAppOnDevice: tool({
     description: 'Launches a given Android application on a specified device',
     parameters: z.object({
@@ -124,6 +148,7 @@ export const androidTools = {
       reactNativeConfig_android_packageName: z.string(),
       reactNativeConfig_android_mainActivity: z.string(),
       reactNativeConfig_android_applicationId: z.string(),
+      didForwardMetroPortToDevice: z.boolean(),
     }),
     execute: async ({
       androidDevice_id: deviceId,
@@ -131,7 +156,14 @@ export const androidTools = {
       reactNativeConfig_android_packageName: packageName,
       reactNativeConfig_android_mainActivity: mainActivity,
       reactNativeConfig_android_applicationId: applicationId,
+      didForwardMetroPortToDevice,
     }) => {
+      if (!didForwardMetroPortToDevice) {
+        return {
+          error: 'Port is not forwarded to device.',
+          action: 'Run "runAdbReverse" to forward port to device and try again.',
+        }
+      }
       try {
         // @ts-ignore
         tryLaunchAppOnDevice(deviceId, { packageName, mainActivity, applicationId }, adbPath, {
