@@ -93,6 +93,11 @@ const messages: CoreMessage[] = [
 
 const s = spinner()
 
+const tools = {
+  ...reactNativeTools,
+  ...iosTools,
+  ...androidTools,
+}
 // eslint-disable-next-line no-constant-condition
 while (true) {
   s.start(chalk.gray('Thinking...'))
@@ -100,18 +105,22 @@ while (true) {
   const response = await generateText({
     model: openai(AI_MODEL),
     system: reactNativePrompt,
-    tools: {
-      ...reactNativeTools,
-      ...iosTools,
-      ...androidTools,
-    },
+    tools,
     maxSteps: 10,
     messages,
     onStepFinish(event) {
       if (event.toolCalls.length > 0) {
-        s.message(
-          `Executing: ${chalk.gray(event.toolCalls.map((toolCall) => toolCall.toolName).join(', '))}`
-        )
+        const message = `Executing: ${chalk.gray(event.toolCalls.map((toolCall) => toolCall.toolName).join(', '))}`
+
+        let spinner = s.message
+        for (const toolCall of event.toolCalls) {
+          if (['buildAndroidApp'].includes(toolCall.toolName)) {
+            spinner = s.stop
+            break
+          }
+        }
+
+        spinner(message)
       }
     },
   })
