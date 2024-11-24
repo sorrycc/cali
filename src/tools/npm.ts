@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 import { install, installDev, uninstall } from './vendor-rncli'
 
-export const generalTools = {
+export const npmTools = {
   installPackage: tool({
     description: 'Install a package from npm by name',
     parameters: z.object({
