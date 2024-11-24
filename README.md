@@ -37,7 +37,7 @@ Cali is still in the early stages of development, but it already supports:
 - **Build Automation**: Running and building React Native apps on iOS and Android
 - **Device Management**: Listing and managing connected Android and iOS devices and simulators
 - **Dependency Management**: Install and manage npm packages and CocoaPods dependencies.
-- **React Native Library Search**: Searching and listing React Native libraries from [reactnative.directory](https://reactnative.directory)
+- **React Native Library Search**: Searching and listing React Native libraries from [React Native Directory](https://reactnative.directory)
 
 as well as various smaller utilities:
 
