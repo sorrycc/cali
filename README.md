@@ -51,7 +51,7 @@ We are actively working on expanding its capabilities. If you would like to requ
 
 #### Building an app step-by-step
 
-[TBD]
+<video src="./assets/promo-1.mp4" width="500" />
 
 #### Building an app with a highly-specific task
 
