@@ -1,6 +1,6 @@
 import 'dotenv/config'
 
-import { createOpenAI, openai } from '@ai-sdk/openai'
+import { createOpenAI } from '@ai-sdk/openai'
 import { confirm, log, select, spinner, text } from '@clack/prompts'
 import { CoreMessage, generateText } from 'ai'
 import chalk from 'chalk'
@@ -46,11 +46,31 @@ console.log()
 const OPENAI_API_KEY =
   process.env.OPENAI_API_KEY ||
   ((await text({
-    message:
-      'Please provide your OpenAI API key. To skip this message, set OPEN_AI_KEY env variable. You can do so by creating an `.env.local` file (make sure to .gitignore it) or pass it inline.',
+    message: dedent`
+      Please provide your OpenAI API key. 
+      
+      To skip this message, set ${chalk.bold('OPENAI_API_KEY')} env variable, and run again. 
+      
+      You can do it in three ways:
+      - by creating an ${chalk.bold('.env.local')} file (make sure to ${chalk.bold('.gitignore')} it)
+        ${chalk.gray(`\`\`\`
+          OPENAI_API_KEY=<your-key>
+          \`\`\`
+        `)}
+      - by passing it inline:
+        ${chalk.gray(`\`\`\`
+          OPENAI_API_KEY=<your-key> npx cali
+          \`\`\`
+        `)}
+      - by setting it as an env variable in your shell (e.g. in ~/.zshrc or ~/.bashrc):
+        ${chalk.gray(`\`\`\`
+          export OPENAI_API_KEY=<your-key>
+          \`\`\`
+        `)}
+    `,
   })) as string)
 
-const MODEL = process.env.MODEL || 'gpt-4o'
+const AI_MODEL = process.env.AI_MODEL || 'gpt-4o'
 
 const openai = createOpenAI({
   apiKey: OPENAI_API_KEY,
@@ -78,7 +98,7 @@ while (true) {
   s.start(chalk.gray('Thinking...'))
 
   const response = await generateText({
-    model: openai(MODEL),
+    model: openai(AI_MODEL),
     system: reactNativePrompt,
     tools: {
       ...reactNativeTools,

@@ -27,7 +27,7 @@ Under the hood, it uses [Vercel AI SDK](https://github.com/ai-sdk/ai) and [@reac
 The default model is `gpt-4o`.
 
 > [!NOTE]
-> You can change the default model by setting `MODEL` env variable. We are currently
+> You can change the default model by setting `AI_MODEL` env variable. We are currently
 evaluating how different models perform, so we might change the default model in the future.
 
 ## Prerequisites
