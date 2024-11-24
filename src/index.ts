@@ -43,17 +43,17 @@ console.log(
 
 console.log()
 
-const OPEN_AI_KEY =
-  process.env.OPEN_AI_KEY ||
+const OPENAI_API_KEY =
+  process.env.OPENAI_API_KEY ||
   ((await text({
     message:
       'Please provide your OpenAI API key. To skip this message, set OPEN_AI_KEY env variable. You can do so by creating an `.env.local` file (make sure to .gitignore it) or pass it inline.',
   })) as string)
 
-const OPENAI_MODEL = process.env.OPEN_AI_MODEL || 'gpt-4o'
+const MODEL = process.env.MODEL || 'gpt-4o'
 
 const openai = createOpenAI({
-  apiKey: OPEN_AI_KEY,
+  apiKey: OPENAI_API_KEY,
 })
 
 const question = (await text({
@@ -78,7 +78,7 @@ while (true) {
   s.start(chalk.gray('Thinking...'))
 
   const response = await generateText({
-    model: openai(OPENAI_MODEL),
+    model: openai(MODEL),
     system: reactNativePrompt,
     tools: {
       ...reactNativeTools,
