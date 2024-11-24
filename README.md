@@ -24,13 +24,25 @@ Thanks to that, an LLM can help you with your React Native app development, with
 
 Under the hood, it uses [Vercel AI SDK](https://github.com/ai-sdk/ai) and [@react-native-community/cli](https://github.com/react-native-community/cli).
 
+The default model is `gpt-4o`.
+
+> [!NOTE]
+> You can change the default model by setting `OPEN_AI_MODEL` env variable. We are currently
+evaluating how different models perform, so we might change the default model in the future.
+
+## Prerequisites
+
+In order to use Cali, you need to have an OpenAI API key. You can get one [here](https://platform.openai.com/api-keys).
+
+Once you have your key, you can set it as `OPEN_AI_KEY` env variable (either create a dotenv file or set it inline).
+
 ## Features
 
 [TBD]
 
 ## Usage
 
-Under the hood, Cali uses Vercel AI SDK. That means you can import all its tools into your existing project and use them for different purposes.
+Under the hood, Cali uses Vercel AI SDK. That means you can import all its tools into your existing project and use them for different purposes, without our interactive chat interface.
 
 ```ts
 // import all tools

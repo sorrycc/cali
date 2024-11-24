@@ -1,4 +1,6 @@
-import { openai } from '@ai-sdk/openai'
+import 'dotenv/config'
+
+import { createOpenAI, openai } from '@ai-sdk/openai'
 import { confirm, log, select, spinner, text } from '@clack/prompts'
 import { CoreMessage, generateText } from 'ai'
 import chalk from 'chalk'
@@ -41,6 +43,19 @@ console.log(
 
 console.log()
 
+const OPEN_AI_KEY =
+  process.env.OPEN_AI_KEY ||
+  ((await text({
+    message:
+      'Please provide your OpenAI API key. To skip this message, set OPEN_AI_KEY env variable. You can do so by creating an `.env.local` file (make sure to .gitignore it) or pass it inline.',
+  })) as string)
+
+const OPENAI_MODEL = process.env.OPEN_AI_MODEL || 'gpt-4o'
+
+const openai = createOpenAI({
+  apiKey: OPEN_AI_KEY,
+})
+
 const question = (await text({
   message: 'What do you want to do today?',
 })) as string
@@ -63,7 +78,7 @@ while (true) {
   s.start(chalk.gray('Thinking...'))
 
   const response = await generateText({
-    model: openai('gpt-4o'),
+    model: openai(OPENAI_MODEL),
     system: reactNativePrompt,
     tools: {
       ...reactNativeTools,
