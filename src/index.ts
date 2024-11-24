@@ -108,13 +108,13 @@ while (true) {
     tools,
     maxSteps: 10,
     messages,
-    onStepFinish(event) {
-      if (event.toolCalls.length > 0) {
-        const message = `Executing: ${chalk.gray(event.toolCalls.map((toolCall) => toolCall.toolName).join(', '))}`
+    onStepStart(toolCalls) {
+      if (toolCalls.length > 0) {
+        const message = `Executing: ${chalk.gray(toolCalls.map((toolCall) => toolCall.toolName).join(', '))}`
 
         let spinner = s.message
-        for (const toolCall of event.toolCalls) {
-          if (['buildAndroidApp'].includes(toolCall.toolName)) {
+        for (const toolCall of toolCalls) {
+          if (['buildAndroidApp', 'launchAndroidAppOnDevice'].includes(toolCall.toolName)) {
             spinner = s.stop
             break
           }
