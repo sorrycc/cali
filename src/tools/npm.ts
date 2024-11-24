@@ -27,7 +27,6 @@ export const npmTools = {
         }
       } catch (error) {
         return {
-          success: false,
           error: error instanceof Error ? error.message : 'Failed to install package',
         }
       }
@@ -52,7 +51,6 @@ export const npmTools = {
         }
       } catch (error) {
         return {
-          success: false,
           error: error instanceof Error ? error.message : 'Failed to install package',
         }
       }

@@ -97,15 +97,12 @@ export const reactNativeTools = {
   listReactNativeLibraries: tool({
     description: dedent`
       List React Native libraries from reactnative.directory.
-      
       Can be used to search for libraries by name or category.
-
-      Offer users to install the library they pick.
 
       Returns:
         - "name" - library name with stars count, show only this in the list.
         - "description" - library description
-        - "npmPackageName" - npm package name
+        - "npmPackageName" - npm package name to use with "npm install"
         - "score" - library score
         - "url" - library GitHub repository URL
     `,
