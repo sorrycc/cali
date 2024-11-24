@@ -1,3 +1,8 @@
+import {
+  findDevServerPort,
+  getDefaultUserTerminal,
+  startServerInNewWindow,
+} from '@react-native-community/cli-tools'
 import { tool } from 'ai'
 import dedent from 'dedent'
 import { z } from 'zod'
@@ -7,11 +12,26 @@ import { loadReactNativeConfig } from './vendor-rncli'
 export const reactNativeTools = {
   startMetro: tool({
     description: 'Start Metro bundler',
-    parameters: z.object({}),
-    execute: async () => {
-      return {
-        port: 3000,
-        debuggerUrl: null,
+    parameters: z.object({
+      port: z.number().default(8081),
+    }),
+    execute: async ({ port }) => {
+      try {
+        const config = await loadReactNativeConfig()
+        const { port: newPort } = await findDevServerPort(port, config.root)
+        startServerInNewWindow(
+          newPort,
+          config.root,
+          config.reactNativePath,
+          getDefaultUserTerminal()
+        )
+        return {
+          success: true,
+        }
+      } catch (error) {
+        return {
+          error: error instanceof Error ? error.message : 'Failed to start Metro bundler',
+        }
       }
     },
   }),
