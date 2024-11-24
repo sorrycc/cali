@@ -98,20 +98,6 @@ I like the idea of an AI agent for building React Native apps. I would like to p
 
 Feel free to open an issue or a discussion to suggest ideas or report bugs. Happy to hear from you! 👋
 
-## Contributing
-
-This project uses Bun.
-
-To build the project, run `bun run build`.
-To watch for changes and rebuild the project, run `bun run watch`.
-
-To link the project to your global `bun` installation, run `bun link`.
-
-To run the project, run `bun ./src/cli.ts`.
-To run the project from global installation, run `bun --bun run cali`.
-
-Note `--bun` is required due to shebang line in the CLI pointing to Node.
-
 ## Special thanks
 
 Special thanks to [@jedirandy](https://github.com/jedirandy) for donating the name `cali` on `npm`!
