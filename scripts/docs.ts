@@ -103,36 +103,40 @@ function generateMarkdown(
   parameters: ts.ObjectLiteralElementLike | undefined,
   execute: ts.ObjectLiteralElementLike | undefined
 ): string {
+  // Extract description
   let descriptionText = 'No description available'
-
   if (description && ts.isPropertyAssignment(description)) {
     if (ts.isStringLiteral(description.initializer)) {
       descriptionText = description.initializer.text
     } else if (ts.isTaggedTemplateExpression(description.initializer)) {
-      // Handle dedent`...` case
       const template = description.initializer.template
       if (ts.isNoSubstitutionTemplateLiteral(template)) {
         descriptionText = dedent(template.text)
       } else if (ts.isTemplateExpression(template)) {
-        descriptionText = template.getText().replace(/^`|`$/g, '').trim()
+        descriptionText = dedent(template.getText().replace(/^`|`$/g, ''))
       }
     }
   }
 
-  let parametersText = 'No parameters'
+  // Extract parameters
+  let parametersText = ''
   if (parameters && ts.isPropertyAssignment(parameters)) {
-    const lines = parameters.initializer.getText().split('\n')
-    parametersText = lines
-      .map((line, index) => {
-        line = line.trim()
-        if (index === 0) return line
-        if (index === lines.length - 1) return line
-        return line ? `  ${line}` : ''
-      })
-      .filter(Boolean)
-      .join('\n')
+    const paramText = parameters.initializer.getText().trim()
+    if (paramText !== 'z.object({})') {
+      const lines = paramText.split('\n')
+      parametersText = lines
+        .map((line, index) => {
+          line = line.trim()
+          if (index === 0 || index === lines.length - 1) return line
+          return line ? `  ${line}` : ''
+        })
+        .filter(Boolean)
+        .join('\n')
+      parametersText = `### Parameters\n\`\`\`typescript\n${parametersText}\n\`\`\``
+    }
   }
 
+  // Extract return type
   let returnType = 'Unknown'
   if (execute && ts.isPropertyAssignment(execute) && ts.isArrowFunction(execute.initializer)) {
     const returnStatements = findReturnStatements(execute.initializer.body)
@@ -145,8 +149,7 @@ function generateMarkdown(
           const formattedLines = lines
             .map((line, index) => {
               line = line.trim()
-              if (index === 0) return line
-              if (index === lines.length - 1) return line
+              if (index === 0 || index === lines.length - 1) return line
               return line ? `  ${line}` : ''
             })
             .filter(Boolean)
@@ -155,15 +158,6 @@ function generateMarkdown(
         })
         .join('\n')
     }
-  }
-
-  if (parametersText === 'z.object({})') {
-    parametersText = ''
-  } else {
-    parametersText = `### Parameters
-\`\`\`typescript
-${parametersText}
-\`\`\``
   }
 
   return `## ${toolName}
