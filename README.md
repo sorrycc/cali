@@ -38,7 +38,20 @@ Once you have your key, you can set it as `OPENAI_API_KEY` env variable (either 
 
 ## Features
 
-[TBD]
+Cali is still in the early stages of development, but it already supports:
+
+- **Build Automation**: Running and building React Native apps on iOS and Android
+- **Device Management**: Listing and managing connected Android and iOS devices and simulators
+- **Dependency Management**: Install and manage npm packages and CocoaPods dependencies.
+- **React Native Library Search**: Searching and listing React Native libraries from [reactnative.directory](https://reactnative.directory)
+
+as well as various smaller utilities:
+
+- **Port Forwarding**: Use ADB to forward ports for Android devices.
+- **Ruby Gems Installation**: Install Ruby gems, including CocoaPods, for iOS projects.
+- **Metro Bundler**: Automatically start Metro bundler for React Native projects.
+
+We are actively working on expanding its capabilities. If you would like to request a feature, please open an issue.
 
 ## Usage
 
