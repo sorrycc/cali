@@ -14,8 +14,8 @@ import {
 
 const platforms = ['ios', 'tvos', 'visionos'] as const
 
-export const listAppleSimulators = tool({
-  description: 'List available simulators',
+export const getAppleSimulators = tool({
+  description: 'Gets available simulators',
   parameters: z.object({
     platform: z.enum(platforms),
   }),
