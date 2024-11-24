@@ -30,12 +30,6 @@ The default model is `gpt-4o`.
 > You can change the default model by setting `AI_MODEL` env variable. We are currently
 evaluating how different models perform, so we might change the default model in the future.
 
-## Prerequisites
-
-In order to use Cali, you need to have an OpenAI API key. You can get one [here](https://platform.openai.com/api-keys).
-
-Once you have your key, you can set it as `OPENAI_API_KEY` env variable (either create a dotenv file or set it inline).
-
 ## Features
 
 Cali is still in the early stages of development, but it already supports:
@@ -52,6 +46,12 @@ as well as various smaller utilities:
 - **Metro Bundler**: Automatically start Metro bundler for React Native projects.
 
 We are actively working on expanding its capabilities. If you would like to request a feature, please open an issue.
+
+## Prerequisites
+
+In order to use Cali, you need to have an OpenAI API key. You can get one [here](https://platform.openai.com/api-keys).
+
+Once you have your key, you can set it as `OPENAI_API_KEY` env variable (either create a dotenv file or set it inline).
 
 ## Usage
 
