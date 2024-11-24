@@ -12,6 +12,8 @@ export {
   default as tryLaunchEmulator,
 } from '@react-native-community/cli-platform-android/build/commands/runAndroid/tryLaunchEmulator'
 
+import { Config } from '@react-native-community/cli-types'
+
 export function getEmulatorName(adbPath: string, deviceId: string) {
   const buffer = execSync(`${adbPath} -s ${deviceId} emu avd name`)
   return buffer
@@ -29,7 +31,15 @@ export function getPhoneName(adbPath: string, deviceId: string) {
     .trim()
 }
 
-export async function loadReactNativeConfig() {
+// Cache for React Native config
+let reactNativeConfigCache: Config | null = null
+
+export async function loadReactNativeConfig(): Promise<Config | null> {
+  // Return cached config if available
+  if (reactNativeConfigCache !== null) {
+    return reactNativeConfigCache
+  }
+
   try {
     const output = execSync('npx react-native config', {
       env: {
@@ -39,12 +49,19 @@ export async function loadReactNativeConfig() {
       stdio: ['pipe', 'pipe', 'ignore'],
       encoding: 'utf8',
     }).toString()
-    return JSON.parse(output)
+
+    // Store the parsed output in cache
+    reactNativeConfigCache = JSON.parse(output)
+    return reactNativeConfigCache
   } catch (error) {
-    return {
-      error: `There was an error loading project configuration: ${JSON.stringify(error)}`,
-    }
+    console.error('Failed to load React Native config:', error)
   }
+  return null
+}
+
+// Optional: Add a method to clear the cache if needed
+export function clearReactNativeConfigCache() {
+  reactNativeConfigCache = null
 }
 
 export {
