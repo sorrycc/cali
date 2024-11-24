@@ -59,13 +59,23 @@ export const androidTools = {
   }),
 
   bootAndroidEmulator: tool({
-    description: 'Boots a given Android emulator',
+    description: 'Boots a given Android emulator and returns its ID',
     parameters: z.object({
       adbPath: z.string(),
       androidDevice_name: z.string(),
     }),
     execute: async ({ adbPath, androidDevice_name: emulatorName }) => {
-      await tryLaunchEmulator(adbPath, emulatorName)
+      try {
+        await tryLaunchEmulator(adbPath, emulatorName)
+        return {
+          success: true,
+          action: `Device booted. Re-run "getAndroidDevices" to verify ${emulatorName} is in the list, with "booted" set to true.`,
+        }
+      } catch (error) {
+        return {
+          error: error instanceof Error ? error.message : 'Failed to boot emulator',
+        }
+      }
     },
   }),
 
