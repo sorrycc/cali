@@ -3,7 +3,7 @@
 </div>
 
 <p align="center">
-  <img src="./assets/terminal.png" width="500" />
+  <img src="https://github.com/user-attachments/assets/3554c7d3-0ea8-40a2-bd9c-176cfec231af" width="500" />
 </p>
 
 <p align="center">
@@ -51,7 +51,7 @@ We are actively working on expanding its capabilities. If you would like to requ
 
 #### Building an app step-by-step
 
-<video src="./assets/promo-1.mp4" width="500" />
+<video src="https://github.com/user-attachments/assets/1d9c3f5b-d5cd-4901-8cad-bd10f1a45b07" width="500" />
 
 #### Building an app with a highly-specific task
 
