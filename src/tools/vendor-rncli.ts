@@ -6,7 +6,7 @@ import { execSync } from 'child_process'
 import { EOL } from 'os'
 
 export { default as adb } from '@react-native-community/cli-platform-android/build/commands/runAndroid/adb'
-export { default as getAdbPath } from '@react-native-community/cli-platform-android/build/commands/runAndroid/getAdbPath'
+export { default as getAdbPathString } from '@react-native-community/cli-platform-android/build/commands/runAndroid/getAdbPath'
 export {
   getEmulators,
   default as tryLaunchEmulator,
