@@ -1,8 +1,6 @@
 {
   "name": "cali",
-  "version": "0.0.1",
-  "author": "Mike Grabowski <mike@callstack.com>",
-  "license": "MIT",
+  "version": "0.1.0",
   "description": "AI agent that runs React Native apps",
   "type": "module",
   "main": "./dist/index.js",
@@ -10,7 +8,7 @@
     "cali": "./dist/cli.js"
   },
   "scripts": {
-    "build": "bun run build:tools && bun run build:cli",
+    "prepare": "bun run build:tools && bun run build:cli",
     "build:tools": "bun build ./src/index.ts --outdir ./dist --target node --packages external",
     "build:cli": "bun build ./src/cli.ts --outdir ./dist --target node"
   },
@@ -48,5 +46,32 @@
   },
   "patchedDependencies": {
     "ai@4.0.3": "patches/ai@4.0.3.patch"
+  },
+  "author": "Mike Grabowski <mike@callstack.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/callstackincubator/cali.git"
+  },
+  "contributors": [
+    "Oskar Kwasniewski <oskarkwasniewski@icloud.com> (https://github.com/okwasniewski)"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/callstackincubator/cali/issues"
+  },
+  "homepage": "https://github.com/callstackincubator/cali/#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "keywords": [
+    "react-native",
+    "ai",
+    "agent",
+    "vercel ai",
+    "chatgpt"
+  ],
+  "engines": {
+    "node": ">=22"
   }
 }
