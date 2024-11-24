@@ -22,7 +22,7 @@ Cali is an AI agent that helps you build React Native apps. It takes all the uti
 
 Thanks to that, an LLM can help you with your React Native app development, without the need to remember commands, spending time troubleshooting errors, and in the future, much more.
 
-Under the hood, it uses [Vercel AI SDK](https://github.com/ai-sdk/ai) and [@react-native-community/cli](https://github.com/react-native-community/cli).
+Under the hood, it uses [Vercel AI SDK](https://github.com/ai-sdk/ai), [@react-native-community/cli](https://github.com/react-native-community/cli).
 
 The default model is `gpt-4o`.
 
@@ -46,6 +46,24 @@ as well as various smaller utilities:
 - **Metro Bundler**: Automatically start Metro bundler for React Native projects.
 
 We are actively working on expanding its capabilities. If you would like to request a feature, please open an issue.
+
+## Examples
+
+#### Building an app step-by-step
+
+[TBD]
+
+#### Building an app with a highly-specific task
+
+[TBD]
+
+#### Searching and installing a new React Native library
+
+[TBD]
+
+#### Troubleshooting an error
+
+[TBD]
 
 ## Prerequisites
 
