@@ -27,14 +27,14 @@ Under the hood, it uses [Vercel AI SDK](https://github.com/ai-sdk/ai) and [@reac
 The default model is `gpt-4o`.
 
 > [!NOTE]
-> You can change the default model by setting `OPEN_AI_MODEL` env variable. We are currently
+> You can change the default model by setting `AI_MODEL` env variable. We are currently
 evaluating how different models perform, so we might change the default model in the future.
 
 ## Prerequisites
 
 In order to use Cali, you need to have an OpenAI API key. You can get one [here](https://platform.openai.com/api-keys).
 
-Once you have your key, you can set it as `OPEN_AI_KEY` env variable (either create a dotenv file or set it inline).
+Once you have your key, you can set it as `OPENAI_API_KEY` env variable (either create a dotenv file or set it inline).
 
 ## Features
 
