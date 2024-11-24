@@ -1,3 +1,5 @@
+import 'dotenv/config'
+  
 import { openai } from '@ai-sdk/openai'
 import { confirm, log, select, spinner, text } from '@clack/prompts'
 import { CoreMessage, generateText } from 'ai'
