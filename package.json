@@ -10,7 +10,8 @@
   "scripts": {
     "prepare": "bun run build:tools && bun run build:cli",
     "build:tools": "bun build ./src/index.ts --outdir ./dist --target node --packages external",
-    "build:cli": "bun build ./src/cli.ts --outdir ./dist --target node"
+    "build:cli": "bun build ./src/cli.ts --outdir ./dist --target node",
+    "release": "release-it"
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.0.2",
@@ -28,6 +29,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@react-native-community/cli-types": "^15.1.2",
     "@release-it-plugins/workspaces": "^4.2.0",
     "@release-it/conventional-changelog": "^9.0.3",
     "@typescript-eslint/eslint-plugin": "^7.3.1",
