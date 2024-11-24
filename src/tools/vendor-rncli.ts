@@ -47,6 +47,11 @@ export async function loadReactNativeConfig() {
   }
 }
 
+export {
+  install,
+  installDev,
+  uninstall,
+} from '@react-native-community/cli/build/tools/packageManager'
 export { build } from '@react-native-community/cli-platform-android/build/commands/buildAndroid'
 export { getTaskNames } from '@react-native-community/cli-platform-android/build/commands/runAndroid/getTaskNames'
 export { default as tryLaunchAppOnDevice } from '@react-native-community/cli-platform-android/build/commands/runAndroid/tryLaunchAppOnDevice'

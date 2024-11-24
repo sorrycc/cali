@@ -11,6 +11,7 @@ import { z } from 'zod'
 import { reactNativePrompt } from './prompt'
 import * as androidTools from './tools/android'
 import * as iosTools from './tools/apple'
+import * as npmTools from './tools/npm'
 import * as reactNativeTools from './tools/react-native'
 
 const MessageSchema = z.union([
@@ -95,6 +96,7 @@ const tools = {
   ...reactNativeTools,
   ...iosTools,
   ...androidTools,
+  ...npmTools,
 }
 
 const s = spinner()
@@ -119,7 +121,14 @@ while (true) {
            * Certain tools call external helpers outside of our control that pipe output to our stdout.
            * In such case, we stop the spinner to avoid glitches and display the output instead.
            */
-          if (['buildAndroidApp', 'launchAndroidAppOnDevice'].includes(toolCall.toolName)) {
+          if (
+            [
+              'buildAndroidApp',
+              'launchAndroidAppOnDevice',
+              'installNpmPackage',
+              'uninstallNpmPackage',
+            ].includes(toolCall.toolName)
+          ) {
             spinner = s.stop
             break
           }
