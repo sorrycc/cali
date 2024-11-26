@@ -83,7 +83,7 @@ export const buildAppleAppWithoutStarting = tool({
       }
     } catch (error) {
       return {
-        error: JSON.stringify(error),
+        error: error instanceof Error ? error.message : 'Failed to build application',
       }
     }
   },
@@ -104,17 +104,17 @@ export const buildStartAppleApp = tool({
     clean: z.boolean().optional().default(false),
   }),
   execute: async ({ platform, ...params }) => {
-    const config = await loadReactNativeConfig()
     const run = createAppleRun({ platformName: platform })
 
     try {
+      const config = await loadReactNativeConfig()
       await run([], config, params)
       return {
         success: true,
       }
     } catch (error) {
       return {
-        error: JSON.stringify(error),
+        error: error instanceof Error ? error.message : 'Failed to start application',
       }
     }
   },
@@ -176,11 +176,17 @@ export const startAppleLogging = tool({
     interactive: z.boolean().optional().default(true),
   }),
   execute: async ({ platform, ...params }) => {
-    const config = await loadReactNativeConfig()
-    const log = createLogCommand({ platformName: platform })
-    await log([], config, params)
-    return {
-      success: true,
+    try {
+      const config = await loadReactNativeConfig()
+      const log = createLogCommand({ platformName: platform })
+      await log([], config, params)
+      return {
+        success: true,
+      }
+    } catch (error) {
+      return {
+        error: error instanceof Error ? error.message : 'Failed to start logging',
+      }
     }
   },
 })

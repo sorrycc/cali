@@ -67,19 +67,25 @@ export const getReactNativeConfig = tool({
   `,
   parameters: z.object({}),
   execute: async () => {
-    const {
-      root,
-      reactNativePath: path,
-      reactNativeVersion: version,
-      project,
-      platforms,
-    } = await loadReactNativeConfig()
-    return {
-      root,
-      path,
-      version,
-      project,
-      platforms,
+    try {
+      const {
+        root,
+        reactNativePath: path,
+        reactNativeVersion: version,
+        project,
+        platforms,
+      } = await loadReactNativeConfig()
+      return {
+        root,
+        path,
+        version,
+        project,
+        platforms,
+      }
+    } catch (error) {
+      return {
+        error: error instanceof Error ? error.message : 'Failed to get React Native config',
+      }
     }
   },
 })

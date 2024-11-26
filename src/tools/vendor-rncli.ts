@@ -34,12 +34,11 @@ export function getPhoneName(adbPath: string, deviceId: string) {
 // Cache for React Native config
 let reactNativeConfigCache: Config | null = null
 
-export async function loadReactNativeConfig(): Promise<Config | null> {
+export async function loadReactNativeConfig(): Promise<Config> {
   // Return cached config if available
   if (reactNativeConfigCache !== null) {
     return reactNativeConfigCache
   }
-
   try {
     const output = execSync('npx react-native config', {
       env: {
@@ -51,12 +50,11 @@ export async function loadReactNativeConfig(): Promise<Config | null> {
     }).toString()
 
     // Store the parsed output in cache
-    reactNativeConfigCache = JSON.parse(output)
+    reactNativeConfigCache = JSON.parse(output) as Config
     return reactNativeConfigCache
   } catch (error) {
-    console.error('Failed to load React Native config:', error)
+    throw new Error(`Failed to load React Native config. Error: ${error}`)
   }
-  return null
 }
 
 // Optional: Add a method to clear the cache if needed
