@@ -3,7 +3,7 @@
 import 'dotenv/config'
 
 import { createOpenAI } from '@ai-sdk/openai'
-import { confirm, log, select, spinner, text } from '@clack/prompts'
+import { confirm, log, outro, select, spinner, text } from '@clack/prompts'
 import { CoreMessage, generateText } from 'ai'
 import chalk from 'chalk'
 import dedent from 'dedent'
@@ -79,9 +79,15 @@ const openai = createOpenAI({
   apiKey: OPENAI_API_KEY,
 })
 
-const question = (await text({
+const question = await text({
   message: 'What do you want to do today?',
-})) as string
+  placeholder: 'e.g. "Build the app" or "See available simulators"',
+})
+
+if (typeof question === 'symbol') {
+  outro(chalk.gray('Bye!'))
+  process.exit(0)
+}
 
 const messages: CoreMessage[] = [
   {
@@ -193,6 +199,7 @@ while (true) {
   })()
 
   if (typeof answer !== 'string') {
+    outro(chalk.gray('Bye!'))
     break
   }
 
