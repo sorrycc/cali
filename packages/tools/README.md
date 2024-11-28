@@ -54,6 +54,10 @@ await generateText({
 ### Git
 - **applyDiff** - Apply a diff/patch to a file
 
+## Learn more
+
+Learn more about Cali on [GitHub](https://github.com/callstackincubator/cali).
+
 ## Missing a tool?
 
 Please open an issue or a discussion to suggest a new tool. We are happy to hear from you! 👋

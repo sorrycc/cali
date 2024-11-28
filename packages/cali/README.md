@@ -1,5 +1,11 @@
 # cali
 
+Cali is an AI agent that helps you build React Native apps. It takes all the utilities and functions of a React Native CLI and exposes them as tools to an LLM.
+
+## Learn more
+
+Learn more about Cali on [GitHub](https://github.com/callstackincubator/cali).
+
 ## Special thanks
 
 Special thanks to [@jedirandy](https://github.com/jedirandy) for donating the name `cali` on `npm`!
