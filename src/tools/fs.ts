@@ -1,6 +1,7 @@
 import { mkdir, readdir, readFile as readFileNode, writeFile } from 'node:fs/promises'
 
 import { tool } from 'ai'
+import { extname } from 'node:path'
 import { z } from 'zod'
 
 const fileEncodingSchema = z
@@ -25,7 +26,6 @@ export const listFiles = tool({
     'List all files in a directory. If path is nested, you must call it separately for each segment',
   parameters: z.object({ path: z.string() }),
   execute: async ({ path }) => {
-    console.log(path)
     return readdir(path)
   },
 })
@@ -54,7 +54,7 @@ export const readFile = tool({
     if (is_image) {
       return {
         data: file,
-        mimeType: `image/${path.split('.').pop()?.toLowerCase()}`,
+        mimeType: `image/${extname(path).toLowerCase().replace('.', '')}`,
       }
     } else {
       return file
