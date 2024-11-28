@@ -5,6 +5,7 @@ import 'dotenv/config'
 import { execSync } from 'node:child_process'
 
 import { createOpenAI } from '@ai-sdk/openai'
+import * as tools from '@cali/tools-react-native'
 import { confirm, log, outro, select, spinner, text } from '@clack/prompts'
 import { CoreMessage, generateText } from 'ai'
 import chalk from 'chalk'
@@ -13,10 +14,6 @@ import { retro } from 'gradient-string'
 import { z } from 'zod'
 
 import { reactNativePrompt } from './prompt'
-import * as androidTools from './tools/android'
-import * as iosTools from './tools/apple'
-import * as npmTools from './tools/npm'
-import * as reactNativeTools from './tools/react-native'
 
 const MessageSchema = z.union([
   z.object({ type: z.literal('select'), content: z.string(), options: z.array(z.string()) }),
@@ -117,13 +114,6 @@ const messages: CoreMessage[] = [
     content: question,
   },
 ]
-
-const tools = {
-  ...reactNativeTools,
-  ...iosTools,
-  ...androidTools,
-  ...npmTools,
-}
 
 const s = spinner()
 
