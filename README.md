@@ -98,10 +98,6 @@ I like the idea of an AI agent for building React Native apps. I would like to p
 
 Feel free to open an issue or a discussion to suggest ideas or report bugs. Happy to hear from you! 👋
 
-## Special thanks
-
-Special thanks to [@jedirandy](https://github.com/jedirandy) for donating the name `cali` on `npm`!
-
 ## Made with ❤️ at Callstack
 
 Cali is an open source project and will always remain free to use. If you think it's cool, please star it 🌟. [Callstack](https://callstack.com) is a group of React and React Native geeks, contact us at [hello@callstack.com](mailto:hello@callstack.com) if you need any help with these or just want to say hi!
